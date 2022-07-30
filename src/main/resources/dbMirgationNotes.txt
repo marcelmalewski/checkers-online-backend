@@ -1,0 +1,2 @@
+w migracja nie edytowac pliku tylko tworzyć nowy
+sprawdzić w dokumentacji jak to zrobić
