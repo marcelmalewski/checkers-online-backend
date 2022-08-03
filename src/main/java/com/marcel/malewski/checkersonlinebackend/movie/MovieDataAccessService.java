@@ -1,12 +1,13 @@
 package com.marcel.malewski.checkersonlinebackend.movie;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class MovieDataAccessService implements MovieDao {
 
    private final JdbcTemplate jdbcTemplate;

@@ -1,7 +1,8 @@
-CREATE TABLE movie
+CREATE TABLE player
 (
-    id           BIGSERIAL PRIMARY KEY,
-    name         TEXT NOT NULL,
-    release_date DATE NOT NULL,
-    unique (name)
+    id       BIGSERIAL PRIMARY KEY,
+    nickname TEXT NOT NULL,
+    password TEXT NOT NULL,
+    usersRoomId INT NOT NULL,
+    unique (nickname)
 );
