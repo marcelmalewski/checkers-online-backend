@@ -21,7 +21,11 @@ public class PlayerDataAccessService implements PlayerDao{
 
    @Override
    public int insertPlayer(Player player) {
-      return 0;
+      String sql = """
+            INSERT INTO player(nickname, password, playersRoomId)
+            VALUES (?, ?, ?);
+           """;
+      return jdbcTemplate.update(sql, player.nickname(), player.password(), player.playersRoomId());
    }
 
    @Override
