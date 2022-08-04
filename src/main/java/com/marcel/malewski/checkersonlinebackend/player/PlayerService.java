@@ -9,23 +9,23 @@ public class PlayerService {
    public PlayerService() {
    }
 
-   public List<Player> findAllPlayers() {
+   public List<Player> getAllPlayers() {
 //        return this.playerRepository.findAll();
       return null;
    }
 
-   public Player findPlayerById(Long id) {
+   public Player getPlayerById(Long id) {
 //        return this.playerRepository.findById(id)
 //                .orElseThrow(() -> new PlayerNotFoundException(String.format(PLAYER_BY_ID_NOT_FOUND_MESSAGE, id)));
       return null;
    }
 
-   public Player savePlayer(Player player) {
+   public Player postPlayer(Player player) {
 //        return this.playerRepository.save(player);
       return null;
    }
 
-   public Player updatePlayer(Player player) {
+   public Player putPlayer(Player player) {
 //        return this.playerRepository.save(player);
       return null;
    }

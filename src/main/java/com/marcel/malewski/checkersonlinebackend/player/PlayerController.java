@@ -20,26 +20,26 @@ public class PlayerController {
    }
 
    @GetMapping
-   public ResponseEntity<List<Player>> findAllPlayers() {
-      List<Player> players =  this.playerService.findAllPlayers();
+   public ResponseEntity<List<Player>> getAllPlayers() {
+      List<Player> players =  this.playerService.getAllPlayers();
       return new ResponseEntity<>(players, HttpStatus.OK);
    }
 
    @GetMapping(path = "/{id}")
-   public ResponseEntity<Player> findPlayerById(@PathVariable("id") Long id) {
-      Player player = this.playerService.findPlayerById(id);
+   public ResponseEntity<Player> getPlayerById(@PathVariable("id") Long id) {
+      Player player = this.playerService.getPlayerById(id);
       return new ResponseEntity<>(player, HttpStatus.OK);
    }
 
    @PostMapping
-   public ResponseEntity<Player> savePlayer(@RequestBody Player player) {
-      Player savedPlayer = this.playerService.savePlayer(player);
+   public ResponseEntity<Player> postPlayer(@RequestBody Player player) {
+      Player savedPlayer = this.playerService.postPlayer(player);
       return new ResponseEntity<>(savedPlayer, HttpStatus.CREATED);
    }
 
    @PutMapping
-   public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
-      Player updatedPlayer = this.playerService.updatePlayer(player);
+   public ResponseEntity<Player> putPlayer(@RequestBody Player player) {
+      Player updatedPlayer = this.playerService.putPlayer(player);
       return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
    }
 
