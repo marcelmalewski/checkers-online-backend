@@ -16,15 +16,20 @@ public class PlayerDataAccessService implements PlayerDao{
 
    @Override
    public List<Player> selectAllPlayers() {
-      return null;
+      var sql = """
+              SELECT id, nickname, password, playersRoomId
+              FROM player
+              LIMIT 100;
+              """;
+      return jdbcTemplate.query(sql, new PlayerRowMapper());
    }
 
    @Override
    public int insertPlayer(Player player) {
-      String sql = """
-            INSERT INTO player(nickname, password, playersRoomId)
-            VALUES (?, ?, ?);
-           """;
+      var sql = """
+              INSERT INTO player(nickname, password, playersRoomId)
+              VALUES (?, ?, ?);
+              """;
       return jdbcTemplate.update(sql, player.nickname(), player.password(), player.playersRoomId());
    }
 

@@ -6,12 +6,14 @@ import java.util.List;
 
 @Service
 public class PlayerService {
-   public PlayerService() {
+   private final PlayerDao playerDao;
+
+   public PlayerService(PlayerDao playerDao) {
+      this.playerDao = playerDao;
    }
 
    public List<Player> getAllPlayers() {
-//        return this.playerRepository.findAll();
-      return null;
+      return this.playerDao.selectAllPlayers();
    }
 
    public Player getPlayerById(Long id) {
@@ -21,8 +23,8 @@ public class PlayerService {
    }
 
    public Player postPlayer(Player player) {
-//        return this.playerRepository.save(player);
-      return null;
+        int result = this.playerDao.insertPlayer(player);
+        return player;
    }
 
    public Player putPlayer(Player player) {
