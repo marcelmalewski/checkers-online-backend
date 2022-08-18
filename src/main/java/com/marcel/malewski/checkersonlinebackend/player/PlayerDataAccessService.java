@@ -16,7 +16,7 @@ public class PlayerDataAccessService implements PlayerDao{
 
    @Override
    public List<Player> selectAllPlayers() {
-      var sql = """
+      String sql = """
               SELECT id, nickname, password, playersRoomId
               FROM player
               LIMIT 100;
@@ -26,11 +26,11 @@ public class PlayerDataAccessService implements PlayerDao{
 
    @Override
    public int insertPlayer(Player player) {
-      var sql = """
+      String sql = """
               INSERT INTO player(nickname, password, playersRoomId)
               VALUES (?, ?, ?);
               """;
-      return jdbcTemplate.update(sql, player.nickname(), player.password(), player.playersRoomId());
+      return jdbcTemplate.update(sql, player.getNickname(), player.getPassword(), player.getPlayersRoomId());
    }
 
    @Override

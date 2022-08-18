@@ -25,7 +25,8 @@ public class PlayerService {
    }
 
    public Player postPlayer(Player player) {
-        int result = this.playerDao.insertPlayer(player);
+        int newPlayerId = this.playerDao.insertPlayer(player);
+        player.setId(newPlayerId);
         return player;
    }
 
