@@ -6,12 +6,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Player {
-   private Integer id;
+   private Long id;
    private String nickname;
    private String password;
    private Integer playersRoomId;
 
-   public Player(int id, String nickname, String password, Integer playersRoomId) {
+   public Player(Long id, String nickname, String password, Integer playersRoomId) {
       this.id = id;
       this.nickname = nickname;
       this.password = password;

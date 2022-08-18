@@ -8,7 +8,7 @@ app:
       pool-size: 30
 
 server:
-  port: 8081
+  port: 8080
   error:
     include-binding-errors: always
     include-message: always
