@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public interface PlayerDao {
    //Data Access Object
-   List<Player> selectAllPlayers();
-   long insertPlayer(Player player);
+   List<Player> getAllPlayers();
+   long postPlayer(Player player);
    long deletePlayer(long id);
    Optional<Player> selectPlayerById(long id);
 }

@@ -16,7 +16,7 @@ public class PlayerService {
    }
 
    public List<Player> getAllPlayers() {
-      return this.playerDao.selectAllPlayers();
+      return this.playerDao.getAllPlayers();
    }
 
    public Player getPlayerById(long id) {
@@ -25,7 +25,7 @@ public class PlayerService {
    }
 
    public Player postPlayer(Player player) {
-      long newPlayerId = this.playerDao.insertPlayer(player);
+      long newPlayerId = this.playerDao.postPlayer(player);
       player.setId(newPlayerId);
 
       return player;
@@ -37,6 +37,8 @@ public class PlayerService {
    }
 
    public void deletePlayerById(long id) {
-//        this.playerRepository.deleteById(id);
+      //dodac jakieś handlowanie erroru
+      //albo zwracać id osoby która została usunięta ?
+      this.playerDao.deletePlayer(id);
    }
 }

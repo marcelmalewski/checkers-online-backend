@@ -2,8 +2,8 @@ package com.marcel.malewski.checkersonlinebackend.player;
 
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
+@Repository
 public class PlayerDataAccessService implements PlayerDao{
    private final JdbcTemplate jdbcTemplate;
 
@@ -21,7 +21,7 @@ public class PlayerDataAccessService implements PlayerDao{
    }
 
    @Override
-   public List<Player> selectAllPlayers() {
+   public List<Player> getAllPlayers() {
       String sql = """
               SELECT id, nickname, password, playersRoomId
               FROM player
@@ -31,7 +31,7 @@ public class PlayerDataAccessService implements PlayerDao{
    }
 
    @Override
-   public long insertPlayer(Player player) {
+   public long postPlayer(Player player) {
       String sql = """
               INSERT INTO player(nickname, password, playersRoomId)
               VALUES (?, ?, ?);
@@ -57,7 +57,14 @@ public class PlayerDataAccessService implements PlayerDao{
 
    @Override
    public long deletePlayer(long id) {
-      return 0;
+      String sql = """
+              DELETE FROM player
+              WHERE id = ?
+              """;
+      //query is for get data from table
+      //if we wany to modify we say update()
+      //this will return number of rows affected
+      return jdbcTemplate.update(sql, id);
    }
 
    @Override
