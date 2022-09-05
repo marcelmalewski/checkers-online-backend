@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface PlayerDao {
    //Data Access Object
    List<Player> getAllPlayers();
+   Optional<Player> getPlayerById(long id);
    long postPlayer(Player player);
-   long deletePlayer(long id);
-   Optional<Player> selectPlayerById(long id);
+   void deletePlayer(long id);
 }

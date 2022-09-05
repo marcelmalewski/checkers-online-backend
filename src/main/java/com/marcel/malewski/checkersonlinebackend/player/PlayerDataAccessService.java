@@ -1,5 +1,7 @@
 package com.marcel.malewski.checkersonlinebackend.player;
 
+import com.marcel.malewski.checkersonlinebackend.exception.NicknameIsAlreadyUsed;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +13,8 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static com.marcel.malewski.checkersonlinebackend.consts.ChobConstants.NICKNAME_IS_ALREADY_USED_MESSAGE;
 
 @Repository
 public class PlayerDataAccessService implements PlayerDao{
@@ -31,6 +35,18 @@ public class PlayerDataAccessService implements PlayerDao{
    }
 
    @Override
+   public Optional<Player> getPlayerById(long id) {
+      String sql = """
+              SELECT id, nickname, password, playersRoomId
+              FROM player
+              WHERE id = ?
+              """;
+      return jdbcTemplate.query(sql, new PlayerRowMapper(), id)
+              .stream()
+              .findFirst();
+   }
+
+   @Override
    public long postPlayer(Player player) {
       String sql = """
               INSERT INTO player(nickname, password, playersRoomId)
@@ -38,25 +54,29 @@ public class PlayerDataAccessService implements PlayerDao{
               """;
       KeyHolder keyHolder = new GeneratedKeyHolder();
 
-      jdbcTemplate.update(connection -> {
-         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-         ps.setString(1, player.getNickname());
-         ps.setString(2, player.getPassword());
+      try {
+         jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, player.getNickname());
+            ps.setString(2, player.getPassword());
 
-         if(Objects.isNull(player.getPlayersRoomId())) {
-            ps.setNull(3, Types.NULL);
-         } else {
-            ps.setLong(3, player.getPlayersRoomId());
-         }
+            if(Objects.isNull(player.getPlayersRoomId())) {
+               ps.setNull(3, Types.NULL);
+            } else {
+               ps.setLong(3, player.getPlayersRoomId());
+            }
 
-         return ps;
-      }, keyHolder);
+            return ps;
+         }, keyHolder);
+      } catch (DuplicateKeyException e) {
+         throw new NicknameIsAlreadyUsed(String.format(NICKNAME_IS_ALREADY_USED_MESSAGE, player.getNickname()));
+      }
 
       return (long) Objects.requireNonNull(keyHolder.getKeys()).get("id");
    }
 
    @Override
-   public long deletePlayer(long id) {
+   public void deletePlayer(long id) {
       String sql = """
               DELETE FROM player
               WHERE id = ?
@@ -64,11 +84,6 @@ public class PlayerDataAccessService implements PlayerDao{
       //query is for get data from table
       //if we wany to modify we say update()
       //this will return number of rows affected
-      return jdbcTemplate.update(sql, id);
-   }
-
-   @Override
-   public Optional<Player> selectPlayerById(long id) {
-      return Optional.empty();
+      jdbcTemplate.update(sql, id);
    }
 }

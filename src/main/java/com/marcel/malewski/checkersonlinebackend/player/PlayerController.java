@@ -25,7 +25,7 @@ public class PlayerController {
       return new ResponseEntity<>(players, HttpStatus.OK);
    }
 
-   @GetMapping(path = "/{id}")
+   @GetMapping(path = "{id}")
    public ResponseEntity<Player> getPlayerById(@PathVariable("id") long id) {
       Player player = this.playerService.getPlayerById(id);
       return new ResponseEntity<>(player, HttpStatus.OK);
@@ -43,9 +43,9 @@ public class PlayerController {
       return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
    }
 
-   @DeleteMapping(path = "/{id}")
-   public ResponseEntity<Player> deletePlayer(@PathVariable("id") Long id) {
+   @DeleteMapping(path = "{id}")
+   public ResponseEntity<Long> deletePlayer(@PathVariable("id") Long id) {
       this.playerService.deletePlayerById(id);
-      return new ResponseEntity<>(HttpStatus.OK);
+      return new ResponseEntity<>(id, HttpStatus.OK);
    }
 }
